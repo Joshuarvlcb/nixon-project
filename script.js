@@ -68,60 +68,66 @@ const thankYouPage = function(){
     thanksPage.style.display = 'block'
     thanksPage.style.opacity = 100
     thanksPage.style.zIndex = 100
-    thanksPage.style.overflow = 'hidden'
+    // thanksPage.style.overflow = 'hidden'
     candidatesPage.style.display = 'none'
 }
 candidatesPage.addEventListener('contextmenu',(e)=>{
     alert('choose wisely')
 })
 
+riggedPresident.style.display = 'none'
 
 candidatesPage.addEventListener('DOMContentLoaded',
-riggedPresident.addEventListener('click',(e)=>{
+decoy.addEventListener('click',(e)=>{
     edminMuskie.style.borderColor = 'red'
+    decoy.style.display = 'none'
+    riggedPresident.style.display = 'block'
+
     riggedPresident.style.borderColor = 'limegreen'
-    straitPartyContainer.style.display = 'none'   
-        presidents.style.display = 'none'
+    straitPartyContainer.style.display = 'none'
+    
     candidatesPage.addEventListener('mousemove',function(e){
-        const pageCordinates = this.getBoundingClientRect()
+        //find out why the the container is not following the cursur
+        const pageCordinates = this.getBoundingClientRect();
         const presidentCoards = {
             //subtracting so we can the space that is left over for it to move 
             //subtracting the height of the of the rigged container / 2 so it can be closer to the mouse
-
             top: e.clientY - pageCordinates.top - riggedPresident.clientHeight/2,
             left:e.clientX - pageCordinates.left - riggedPresident.clientWidth/2,
         }
         if(presidentCoards.top < 0){
-            presidentCoards.top = 0
+            presidentCoards.top = 0;
         }
         if(presidentCoards.left < 0){
-            presidentCoards.left = 0
+            presidentCoards.left = 0;
         }
-        riggedPresident.style.left = presidentCoards.left + 'px'
-        riggedPresident.style.top = presidentCoards.top + 'px'
+        riggedPresident.style.left = presidentCoards.left + 'px';
+        riggedPresident.style.top = presidentCoards.top + 'px';
         setTimeout(thankYouPage,5000)
     })
 }),   
 wrong.addEventListener('click',(e)=>{
     edminMuskie.style.borderColor = 'red'
+    decoy.style.display = 'none'
+    riggedPresident.style.display = 'block'
+
     riggedPresident.style.borderColor = 'limegreen'
     straitPartyContainer.style.display = 'none'
-    presidents.style.display = 'none'
 
     candidatesPage.addEventListener('mousemove',function(e){
         const pageCordinates = this.getBoundingClientRect()
         const presidentCoards = {
             //subtracting so we can the space that is left over for it to move 
             //subtracting the height of the of the rigged container / 2 so it can be closer to the mouse
-
             top: e.clientY - pageCordinates.top - riggedPresident.clientHeight/2,
             left:e.clientX - pageCordinates.left - riggedPresident.clientWidth/2,
         }
+
         if(presidentCoards.top < 0){
-            presidentCoards.top = 0
+            presidentCoards.top = 0;
         }
         if(presidentCoards.left < 0){
-            presidentCoards.left = 0
+            presidentCoards.left = 0;
         }
         riggedPresident.style.left = presidentCoards.left + 'px'
         riggedPresident.style.top = presidentCoards.top + 'px'
@@ -150,3 +156,29 @@ allBtnsArr.forEach((curr,i,arr)=>{
 
 //set time out for 1.5 seconds to click on the confirm and with a opacity color 
 //thank ypu for your ballot page
+const flag = document.getElementById('flag')
+const buttons = document.getElementById('buttons')
+const text = document.getElementById('text')
+
+const buttonsDisapear = function(){
+    buttons.style.opacity = 0
+    text.style.opacity = 0
+    container.classList.add('flag-container')
+}
+
+const fastClick = function (){
+    confirm.classList.add('confirm-opacity')
+    confirm.style.borderColor = 'white'
+}
+const confirm = document.getElementById('confirm');
+confirm.addEventListener('click', function()
+{   
+    setTimeout(fastClick,200)
+
+    setTimeout(buttonsDisapear,600) 
+
+})
+
+//after the button is clicked on then set the thank you for your ballot page
+
+//set the flag in the middle of the page then add a transition of it moving up to the center while all the text is fading out

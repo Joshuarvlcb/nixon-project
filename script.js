@@ -1,14 +1,17 @@
 const voteBtn = document.getElementById('vote')
 const homePage = document.getElementById('home')
 const candidatesPage = document.getElementById('candidatesPage')
+candidatesPage.style.display = 'none'
 
 const off = function(){
     homePage.style.display = 'none'
     }
 
 voteBtn.addEventListener('click',e =>{
-    homePage.classList.add('opacity')
+candidatesPage.style.display = 'block'
+
     candidatesPage.style.opacity = 100
+    homePage.classList.add('opacity')
     setTimeout(off, 1000);
 })
 
@@ -57,34 +60,28 @@ const riggedPresident  = document.getElementById('rigged')
 //this will not allow the user to click on the button of nixons competition
 const presidents = document.getElementById('presidents')
 const edminMuskie = document.getElementById('wrong')
+const thanksPage = document.getElementById('thankYou')
+
+thanksPage.style.display = 'none'
 
 const thankYouPage = function(){
-    const thanksPage = document.getElementById('thankYou')
-    candidatesPage.style.opacity = 0
+    thanksPage.style.display = 'block'
     thanksPage.style.opacity = 100
     thanksPage.style.zIndex = 100
+    thanksPage.style.overflow = 'hidden'
+    candidatesPage.style.display = 'none'
 }
 candidatesPage.addEventListener('contextmenu',(e)=>{
     alert('choose wisely')
 })
 
+
 candidatesPage.addEventListener('DOMContentLoaded',
-presidents.addEventListener('click', function(e){
-    riggedPresident.addEventListener('click',(e)=>{
-        edminMuskie.style.borderColor = 'red'
-        riggedPresident.style.borderColor = 'limegreen'
-        straitPartyContainer.style.display = 'none'    
-    })
-    wrong.addEventListener('click',(e)=>{
-        edminMuskie.style.borderColor = 'red'
-        riggedPresident.style.borderColor = 'limegreen'
-        straitPartyContainer.style.display = 'none'
-    })
-    // if(e.target == 'true'){
-    //     thankYouPage()
-    // }
-    //this will gives us all the cordinates of the page
-    
+riggedPresident.addEventListener('click',(e)=>{
+    edminMuskie.style.borderColor = 'red'
+    riggedPresident.style.borderColor = 'limegreen'
+    straitPartyContainer.style.display = 'none'   
+        presidents.style.display = 'none'
     candidatesPage.addEventListener('mousemove',function(e){
         const pageCordinates = this.getBoundingClientRect()
         const presidentCoards = {
@@ -102,9 +99,38 @@ presidents.addEventListener('click', function(e){
         }
         riggedPresident.style.left = presidentCoards.left + 'px'
         riggedPresident.style.top = presidentCoards.top + 'px'
-        setTimeout(thankYouPage,10000)
+        setTimeout(thankYouPage,5000)
     })
-}))
+}),   
+wrong.addEventListener('click',(e)=>{
+    edminMuskie.style.borderColor = 'red'
+    riggedPresident.style.borderColor = 'limegreen'
+    straitPartyContainer.style.display = 'none'
+    presidents.style.display = 'none'
+
+    candidatesPage.addEventListener('mousemove',function(e){
+        const pageCordinates = this.getBoundingClientRect()
+        const presidentCoards = {
+            //subtracting so we can the space that is left over for it to move 
+            //subtracting the height of the of the rigged container / 2 so it can be closer to the mouse
+
+            top: e.clientY - pageCordinates.top - riggedPresident.clientHeight/2,
+            left:e.clientX - pageCordinates.left - riggedPresident.clientWidth/2,
+        }
+        if(presidentCoards.top < 0){
+            presidentCoards.top = 0
+        }
+        if(presidentCoards.left < 0){
+            presidentCoards.left = 0
+        }
+        riggedPresident.style.left = presidentCoards.left + 'px'
+        riggedPresident.style.top = presidentCoards.top + 'px'
+        setTimeout(thankYouPage,5000)
+    })
+}),
+   
+)
+
 //mouse in and mouse out events on all buttons
 //problem 
 // i want to add and mouse in event whenever i hover over any button and a mouse out whenever cursor levaes the button
@@ -121,3 +147,6 @@ allBtnsArr.forEach((curr,i,arr)=>{
     })
 })
 //i want the page to slowly dissaper and a page appear that says thank you for your vote
+
+//set time out for 1.5 seconds to click on the confirm and with a opacity color 
+//thank ypu for your ballot page
